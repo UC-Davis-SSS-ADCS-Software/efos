@@ -4,7 +4,7 @@
 - numpy
 - pyIGRF
 - math
-- -sgp4
+- sgp4
 
 ## Features
 ### Eclipse Check
