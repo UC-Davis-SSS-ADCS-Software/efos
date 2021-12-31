@@ -1,7 +1,6 @@
 # mag processing
 # imports
 import numpy as np
-import matplotlib.pyplot as plt
 
 # constants
 mag_wc = 0.40 # tbd
@@ -18,7 +17,7 @@ def mag_processing(m_x, m_y, m_z, m_x0, m_y0, m_z0, delta_t, r):
     m_current = np.array((m_x, m_y, m_z))
     m_prev = np.array((m_x0, m_y0, m_z0))
     alpha = np.exp(-1*mag_wc/delta_t) # value tbd
-    m_calib = np.multiply(np.subtract(m_current, mag_gain), mag_gain) # apply offsets and gains
+    m_calib = np.multiply(np.subtract(m_current, mag_offset), mag_gain) # apply offsets and gains
     m_filtered = np.add(np.multiply(m_calib, alpha), np.multiply(m_prev, 1-alpha)) # apply low-pass filter
     b_body = np.dot(r,m_filtered) # apply rotation matrix
     return b_body
