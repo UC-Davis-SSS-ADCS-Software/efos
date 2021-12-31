@@ -5,17 +5,20 @@ import matplotlib.pyplot as plt
 
 # constants
 mag_wc = 0.40 # tbd
-mag_gain = 1.0
-mag_offset = 0.0
+mag_gain = np.array((1.0,1.0,1.0)) # from hardware testing
+mag_offset = np.array((0,0,0)) # from hardware testing
 
 
-# INPUTS: m_current = [m_x, m_y, m_z] at t = t
-#         m_prev = [m_x, m_y, m_z]  at t = t-1
+# INPUTS: m_x, m_y, m_z at t = t
+#         m_x0, m_y0, m_z0  at t = t-1
 #         delta_t = time increment
-# OUTPUTS: m_filtered = [m_x, m_y, m_z] with gains, offsets, filtering applied
-def mag_processing(m_current, m_prev, delta_t):
+#         r = rotation matrix from sensor frame to body frame
+# OUTPUTS: m_out = [m_x, m_y, m_z] with gains, offsets, filtering applied
+def mag_processing(m_x, m_y, m_z, m_x0, m_y0, m_z0, delta_t, r):
+    m_current = np.array((m_x, m_y, m_z))
+    m_prev = np.array((m_x0, m_y0, m_z0))
     alpha = np.exp(-1*mag_wc/delta_t) # value tbd
-    m_calib = [x - mag_offset for x in m_current] # apply offfsets
-    m_calib = np.multiply(m_calib, mag_gain) # apply gains
+    m_calib = np.multiply(np.subtract(m_current, mag_gain), mag_gain) # apply offsets and gains
     m_filtered = np.add(np.multiply(m_calib, alpha), np.multiply(m_prev, 1-alpha)) # apply low-pass filter
-    return m_filtered
+    m_out = r.dot(m_filtered) # apply rotation matrix
+    return m_out
