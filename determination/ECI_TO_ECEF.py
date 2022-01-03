@@ -41,7 +41,7 @@ print("Julian Date, Beginning of Day:", JD)
 # calculate Greenwich Mean Sidereal Time (GMST)
 d_0 = JD - J_2000 # Juliean days since J2000
 T_u = d_0/36525 # Juliean centuries 
-theta_g = 24110.54841 + 8640184.812866 * T_u+0.093104 * T_u ** 2-6.2 * 10 ** (-6) * T_u ** 3
+theta_g = 24110.54841 + 8640184.812866 * T_u + 0.093104 * T_u ** 2-6.2 * 10 ** (-6) * T_u ** 3
 w = (7.2921158553 * 10 ** (-5) + 4.3 * 10 ** (-15) * T_u) * (86400 / (2 * math.pi)) # Earth's rotation rate in [sidereal second/UT second]
 t = date_time.hour * 3600 + date_time.minute * 60 + date_time.second
 GMST = theta_g + w * t
