@@ -2,7 +2,7 @@ import datetime
 import math
 import numpy as np
 
-t_jd = [2021, 12, 27, 14, 35, 22]
+t_jd = [2022, 3, 20, 5, 2, 35]
 # t_jd = [year, month, day, hour, minute, second]
 
 year = t_jd[0]
@@ -56,8 +56,9 @@ degrees_GMST = (GMST_mod/86400)*360
 print("GMST Degrees:", degrees_GMST)
 
 # create rotation matrix
-c = math.cos(math.radians(degrees_GMST))
-s = math.sin(math.radians(degrees_GMST))
-R_eci2ecef = np.array([[c,s,0], [-s,c,0], [0,0,1]])
+c = math.cos(math.radians(-degrees_GMST))
+s = math.sin(math.radians(-degrees_GMST))
+R_ecef2eci = np.array([[c,s,0], [-s,c,0], [0,0,1]])
 print("Rotation Matrix:")
-print(R_eci2ecef)
+print(R_ecef2eci)
+# test: print(np.dot(R_ecef2eci, np.array([1,1,1])))
