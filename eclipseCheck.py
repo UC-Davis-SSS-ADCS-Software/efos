@@ -1,12 +1,13 @@
 # Where the sun don't shine - Checking for eclipse
 #
-# Eclipse check function will take an array input for sun sensor values, compare it,
-# and spit out total number of sensors (out of 24) considered to be
-# "in eclipse" troug the variable inEclipse.
+# eclipseCheck function will take an array input for sun sensor values, and 
+# a threshold value for eclipse, compare them, and spit out total number of 
+# sensors (out of 24) considered to be "in eclipse."
 #
-# Yuvraj Jadav
+# Don't forget to assign the function to a variable wen you call it. 
+# (See all caps part below)
 #
-#-----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
 
 # The actual eclipse check function:
 def eclipseCheck(valueArray, limit):
@@ -17,7 +18,8 @@ def eclipseCheck(valueArray, limit):
     return total
 
 
-# Used actual python 
+# Learned some good python practices to make it 
+# easier for when you import the function
 def main():
     
     sunSensorValues = (0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
@@ -35,6 +37,9 @@ def main():
 if __name__ == "__main__":
     main()
 
-#-----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
+#
+# Yuvraj Jadav
+#
 
 
