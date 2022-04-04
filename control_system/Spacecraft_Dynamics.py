@@ -62,10 +62,10 @@ def spacecraft_dynamics(t, state, control_torque):
     # Angular Kinematics
     # Propagate attitude quaternion
     Omega = np.array([
-        [-1*omega1, -1*omega2, -1*omega3, 0],
-        [0, omega3, -1*omega2, omega1],
-        [-1*omega3, 0, omega1, omega2],
-        [omega2, -1*omega1, 0, omega3]
+        [0, -1*omega1, -1*omega2, -1*omega3],
+        [omega1, 0, omega3, -1*omega2],
+        [omega2, -1*omega3, 0, omega1],
+        [omega3, omega2, -1*omega1, 0]
     ],dtype='float')
 
     q_dot = 0.5*np.dot(Omega,q_state)
@@ -75,19 +75,19 @@ def spacecraft_dynamics(t, state, control_torque):
     H_sc = np.dot(J,omega_state)
     H_RW = np.dot(J_RW,omegaRW_state)
     temp_matrix = np.add(np.subtract(np.dot(Skew(omega_state),H_sc), torque), np.dot(Skew(omega_state),H_RW))
-    #if np.abs(temp_matrix[0]) < 1e-5:
-        #temp_matrix[0] = 0
-    #if np.abs(temp_matrix[1]) < 1e-5:
-        #temp_matrix[1] = 0
-    #if np.abs(temp_matrix[2]) < 1e-5:
-        #temp_matrix[2] = 0
+    if np.abs(temp_matrix[0]) < 1e-5 or np.abs(temp_matrix[0] == np.NaN):
+        temp_matrix[0] = 0
+    if np.abs(temp_matrix[1]) < 1e-5 or np.abs(temp_matrix[1] == np.NaN):
+        temp_matrix[1] = 0
+    if np.abs(temp_matrix[2]) < 1e-5 or np.abs(temp_matrix[2] == np.NaN):
+        temp_matrix[2] = 0
     omega_dot = solve(-1*J,np.array([temp_matrix[0],temp_matrix[1],temp_matrix[2]],dtype='float'))
     #omega_dot = np.dot(-1*inv(J),np.array([temp_matrix[0],temp_matrix[1],temp_matrix[2]],dtype='float'))
 
     # Propagate Reaction Wheel angular rotation rates
-    omegaRW1_dot = control_torque[0]/J_RW[0,0] 
+    omegaRW1_dot = 0
     omegaRW2_dot = 0
-    omegaRW3_dot = 0
+    omegaRW3_dot = control_torque[2]/J_RW[2,2] 
 
     # Return derivatives vector
     dstatedt = np.empty((10,))
