@@ -15,7 +15,7 @@ def igrf_mag_vector_ecef(x_ecef, t_jd):
     # convert ecef to latitude and longitude
     xq = u.quantity.Quantity(x_ecef[0], u.km)
     yq = u.quantity.Quantity(x_ecef[1], u.km)
-    z1 = u.quanity.Quantity(x_ecef[2], u.km)
+    zq = u.quantity.Quantity(x_ecef[2], u.km)
     loc = EarthLocation(x=xq,y=yq,z=zq)
     longitude, latitude, altitude = loc.to_geodetic()
     lon = longitude.value # longitude in degrees
