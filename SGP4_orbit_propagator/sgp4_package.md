@@ -4,5 +4,5 @@ gives x,y,z Cartesian coordinates in True Equator Mean Equinox (TEME) ECI Frame,
 
 ## To Do
 - Verify output of sgp4.py
-- Convert output to J2000 ECI Frame (or whichever ECI Frame we choose)
+- Convert output to J2000 ECI Frame (or whichever ECI Frame we choose) Edit: Do not need to do this assuming error between different ECI frames is small
 - Determine TLE input for our orbit
