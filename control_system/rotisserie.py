@@ -1,6 +1,6 @@
 import math
 
-def rotisserie():
+def rotisserie(j_cs, w_z, j_rw, w_rw):
 
         # Rotisserie function if we don't get TLE. This function will spin
         # the satellite along the z axis at a chosen rate (w_z_des) and
