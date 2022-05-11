@@ -26,7 +26,7 @@ def rotisserie(j_cs, w_z, j_rw, w_rw):
 
         # INSERT    P H O T O G R A P H Y
         
-rotisserie()
+rotisserie(j_cs, w_z, j_rw, w_rw)
 
 
 # Yuvraj Jadav
