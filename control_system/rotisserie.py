@@ -18,6 +18,7 @@ def rotisserie(j_cs, w_z, j_rw, w_rw):
 
 
         #Enter desired CUBESAT angular momentum in RAD/S:
+        # The 5 is deg/sec and completely arbitrary. Feel free to change it.
         w_z_des = (5*math.pi)/180 #rad/s
 
         w_rw_desired = ((j_cs * (w_z - w_z_desired)) + (j_rw * w_rw)) / j_rw]
