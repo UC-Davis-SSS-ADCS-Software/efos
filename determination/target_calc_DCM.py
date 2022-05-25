@@ -72,7 +72,7 @@ def target_calc(r_ECI):
     target_vec_x = -1*r_ECI
     R = calc_rotation(x_ECI,target_vec_x)
     q = dcm_to_euler(R)
-    return q
+    return R # CHANGE BACK TO q FOR FINAL VERSION
 
 #q = target_calc(np.array([1/np.sqrt(2),1/np.sqrt(2),0]))
 #print(q)
