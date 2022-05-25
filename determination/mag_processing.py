@@ -1,5 +1,9 @@
 # mag processing
 # imports
+# notes: 
+# * mag_wc can change depending on how much filtering we want (and depending on sampling rate)
+# * currently sampling rate is 200ms, will check with cs how often we will sample data from magnetometer
+# * still need rotation matrix depending on imu location in cubesat
 import numpy as np
 import matplotlib.pyplot as plt
 # constants
