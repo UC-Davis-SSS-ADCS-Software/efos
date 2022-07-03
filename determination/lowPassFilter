@@ -22,8 +22,8 @@ def lowPassFilter(x, y, z, x0, y0, z0, delta_t):
         z0 = float(z0)
     except:
         return([np.inf, np.inf, np.inf])
-    current = np.array((m_x, m_y, m_z))
-    prev = np.array((m_x0, m_y0, m_z0))
+    current = np.array((x, y, z))
+    prev = np.array((x0, y0, z0))
     alpha = np.exp(-1*wc/delta_t) 
     data_filtered = np.add(np.multiply(current, alpha), np.multiply(prev, 1-alpha)) # apply low-pass filter
     # data_body = np.dot(r,m_filtered) # apply rotation matrix
