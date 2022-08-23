@@ -12,7 +12,7 @@ gyro_offset = np.array((0,0,0)) # from hardware testing
 #         delta_t = time increment
 #         r = rotation matrix from sensor frame to body frame
 # OUTPUTS: w_measured = [w_x, w_y, w_z] rotation in body frame
-def mag_processing(w_x, w_y, w_z, w_x0, w_y0, w_z0, delta_t, r):
+def imu_processing(w_x, w_y, w_z, w_x0, w_y0, w_z0, delta_t, r):
     w_current = np.array((w_x, w_y, w_z))
     w_prev = np.array((w_x0, w_y0, w_z0))
     alpha = np.exp(-1*gyro_wc/delta_t) # value tbd
