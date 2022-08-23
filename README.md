@@ -51,3 +51,7 @@
 ### Reaction Wheel Controller
 - <b>[Link](https://github.com/UC-Davis-SSS-ADCS-Software/efos/blob/85c08c7d222fa22567efb2a631faf74ba045fdc6/control_system/Attitude_Controller.py)</b>
 - <b>Status:</b> n/a, need to check
+
+### Wheel Speed Controller
+- <b>[Link](https://github.com/UC-Davis-SSS-ADCS-Software/efos/blob/master/control_system/MRW_Test.py)</b>
+- <b>Status:</b> need hardware testing for tuning, then restructuring code for flight
