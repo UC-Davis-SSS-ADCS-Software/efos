@@ -6,13 +6,13 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 from Spacecraft_Dynamics import spacecraft_dynamics
-from control_system.Simulation import Attitude_Controller
+import Attitude_Controller
 from EulerAngles2Quaternions import EulerAngles2Quaternions
 from Quaternions2EulerAngles import Quaternions2EulerAngles
 import time
 import datetime
 from sgp4.api import Satrec
-from target_calc import target_calc
+from determination.TargetCalculation.target_calc import target_calc
 
 # Define function to calculate position and velocity in GCRS Frame
 def GCRS_position(jd, fr):
