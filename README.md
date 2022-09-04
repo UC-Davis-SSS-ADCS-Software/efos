@@ -28,7 +28,8 @@
 - <b>Status:</b> code completed, need to verify with alternative SGP4 package (i.e. MATLAB or Java)
 
 ### Sun Model
-- <b>Link:</b> n/a (need to find)
+- <b>[Link](determination/sunLookup.py)</b>
+- <b>Status:</b> code completed and tested against a few MATLAB cases, but could use further testing
 
 ### Magnetic Field Model (IGRF)
 - <b>[Link](determination/IGRF/igrf_mag_vector_ecef.py)</b>
