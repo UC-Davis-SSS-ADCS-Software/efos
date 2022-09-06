@@ -50,9 +50,9 @@
 - <b>Status:</b> completed and verified!
 
 ### Reaction Wheel Controller
-- <b>[Link](control_system/Simulation/Attitude_Controller.py)</b>
+- <b>[Link](control_system/Attitude_Controller.py)</b>
 - <b>Status:</b> n/a, need to check
 
 ### Wheel Speed Controller
-- <b>[Link](control_system/MRW_Test.py)</b>
+- <b>[Link](control_system/MRW/MRW_Test.py)</b>
 - <b>Status:</b> need hardware testing for tuning, then restructuring code for flight
