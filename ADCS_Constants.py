@@ -21,9 +21,12 @@ GYRO_ROTATION = np.ones(3,3) # rotation matrix from magnetometer frame to body f
 
 # CONTROLLER CONSTANTS (PID needs hardware testing)
 BDOT_GAIN = 67200 # bdot gain constant when bdot is on
-PROP_CONTROL = 1 # PID KP when RW is on
-INTEGRAL_CONTROL = 1 # PID KI when RW is on
-DERIVATIVE_CONTROL = 1 # PID KD when RW is on
+PROP_CONTROL_MRW = 1 # PID KP when RW is on (MRW)
+INTEGRAL_CONTROL_MRW = 1 # PID KI when RW is on (MRW)
+DERIVATIVE_CONTROL_MRW = 1 # PID KD when RW is on (MRW)
+PROP_CONTROL_HDD = 1 # PID KP when RW is on (HDD)
+INTEGRAL_CONTROL_HDD = 1 # PID KI when RW is on (HDD)
+DERIVATIVE_CONTROL_HDD = 1 # PID KD when RW is on (HDD)
 
 # MRW CONSTANTS
 MAX_RW_ANGVEL = 4188.0  # max MRW speed (need to verify w/ hardware testing)
@@ -31,3 +34,6 @@ MAX_TORQUE = 10 # max MRW torque, need to calculate with hardware testing
 RW_MOI = 0.00002353 # MRW moment of inertia (kg * m2)
 J_CS = 1 # cubesat moment of inertia (need to get from Structures)
 
+# OTHER CONSTANTS
+# TODO check if CS sets the IMU thresholds or if we need to check for them
+IMU_THRESH = [0, 0, 0] # threshold for detumbling in rad/s

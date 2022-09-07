@@ -12,10 +12,11 @@
 # The actual eclipse check function:
 def eclipseCheck(valueArray, limit):
     total = 0
+    diodesForEclipse = 20 # if enough diodes are dark, we are in eclipse
     for x in valueArray:
         if x <= limit:
             total += 1
-    return total
+    return (total >= diodesForEclipse)
 
 
 # Learned some good python practices to make it 
