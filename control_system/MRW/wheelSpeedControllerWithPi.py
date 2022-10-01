@@ -50,7 +50,7 @@ def inputloop():
 def createCSV(path):
     path = str(path)    # Ensures the path is a string
     os.mkdir(path)      # Creates new directory with that path name
-    header = ['Duty Cycle','wx','wy','wz','Current Speed','Start Time','End Time']    # Change the header columns as needed
+    header = ['Desired Torque', 'Duty Cycle','wx','wy','wz','Current Speed','Start Time','End Time']    # Change the header columns as needed
     with open(path,'w', newline='') as csvfile:     # Opens csv file, writes the header
         writer = csv.writer(csvfile)
         writer.writerow(header)
