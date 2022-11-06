@@ -11,6 +11,7 @@ from bdot_control.code_for_hardware_testing import bdot_control
 from control_system import Attitude_Controller
 from control_system.MRW.Wheel_Speed_Controller import wheelSpeedController
 from control_system.rotisserie import rotisserie
+from bdot_control.bdot_simulation.Control import Control as bdot_control
 
 def Main_ADCS(sunsensor_inputs, mag_inputs, angvel_inputs, datetime, mode, TLE1, TLE2, w_rw, delta_t):
 
@@ -20,7 +21,6 @@ def Main_ADCS(sunsensor_inputs, mag_inputs, angvel_inputs, datetime, mode, TLE1,
 
     # Define date in all formats (mostly for debug purposes -- eventually we should switch to a consistent date format)
     # This assumes we receive the date and time as a Python datetime object
-    # TODO check with CS which format they'll input to the function
     date_as_array = [datetime.year, datetime.month, datetime.day, datetime.hour, datetime.minute, datetime.second]
     epoch_time = calendar_date_to_JD(date_as_array)
 
@@ -47,23 +47,18 @@ def Main_ADCS(sunsensor_inputs, mag_inputs, angvel_inputs, datetime, mode, TLE1,
 
     # If mode command is invalid, return an error
     else:
-        return -1 # TODO check in with CS re: error codes
+        return -1
 
     if mode == 'DETUMBLE':
-        # detumble if IMU is above threshold
-        # TODO does CS check for this or should we?
         if abs(body_angvel[0]) > IMU_THRESH[0] or abs(body_angvel[1]) > IMU_THRESH[1] or abs(IMU_THRESH[2]) > IMU_THRESH[2]:
             dipole = bdot_control(mag_field_body, BDOT_GAIN)
             return dipole
         else:
             return [0, 0, 0]
 
-    # MAIN ADCS LOOP
-    # If REALOP is already detumbled, check if in eclipse before attempting to calculate attitude
     elif eclipseCheck(sunsensor_inputs, ECLIPSE_THRESHOLD) == False:
 
         # SUN PROCESSING
-        # TODO convert sun sensors testing code to sun processing function
         sun_pos_body = sun_processing(sunsensor_inputs)
 
         try:
@@ -83,10 +78,9 @@ def Main_ADCS(sunsensor_inputs, mag_inputs, angvel_inputs, datetime, mode, TLE1,
             # Calculate attitude using TRIAD
             triad_object = triad_class.TRIAD(sun_pos_body, mag_field_body, sun_pos_eci, mag_field_eci)
             q_measured = triad_object.triad()
-            # TODO: figure out how to use target calculation
             [q_desired, w_desired] = Target_calculation(mode,pos_eci,vel_eci)
             w_measured = body_angvel[2] # angular velocity of body about z-axis
-            controller_object = Attitude_Controller.Attitude_Control(q_desired, q_measured, w_desired, w_measured)
+            controller_object = Attitude_Controller.Attitude_Control(q_desired, q_measured, w_desired, w_measured) # reaction wheel controller
             des_torque = controller_object.attitude_control()
             command_vector = wheelSpeedController(des_torque, w_rw, delta_t) # TODO: get loop period or elapsed time per function call
         except:
