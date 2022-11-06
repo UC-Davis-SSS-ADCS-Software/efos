@@ -17,6 +17,8 @@
 # Switched to multiprocessing
 # Thanks StackOverflow!
 # Reference: https://stackoverflow.com/questions/49439139/manipulating-raspbery-pis-dc-motor-speed-while-running-gui
+# TODO Before running on Pi: figure out how to read returned values from processes and terminate processes when duty cycle = 0
+# TODO Before running on Pi: test GUI loop and make sure that doesn't crash
 
 #Import Libraries
 from PyQt5 import QtWidgets, uic, QtCore
