@@ -14,10 +14,8 @@ GYRO_OFFSET = [0, 0, 0] # gyroscope calibration offsets
 GYRO_GAIN = [1, 1, 1] # gyroscope gain offsets
 GYRO_FILTER = 0.40 # gyro filter time constant
 
-# ROTATION MATRICES (all need to be calculated)
-ECI_ROTATION_MATRIX = np.ones(3,3) # rotation matrix from SGP4 output to different ECI frame (need to calculate)
-MAG_ROTATION = np.ones(3,3) # rotation matrix from magnetometer frame to body frame (need to calculate)
-GYRO_ROTATION = np.ones(3,3) # rotation matrix from magnetometer frame to body frame (need to calculate)
+# REFERENCE ANGLES
+THETA_IMU = 90  # degrees; angle from IMU to body frame, measured CCW
 
 # CONTROLLER CONSTANTS (PID needs hardware testing)
 BDOT_GAIN = 67200 # bdot gain constant when bdot is on
