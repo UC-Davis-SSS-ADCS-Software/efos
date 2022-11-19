@@ -7,8 +7,8 @@
 import numpy as np
 from ADCS_Constants import MAG_GAIN, MAG_OFFSET, MAG_FILTER, MAG_ROTATION
 
-# INPUTS: m_x, m_y, m_z: raw magnetomer t = t
-#         m_x0, m_y0, m_z0: filtered magnetometer data at t = t-1
+# INPUTS: m_x, m_y, m_z: raw magnetomer t = t IN SENSOR FRAME
+#         m_x0, m_y0, m_z0: filtered magnetometer data at t = t-1 IN BODY FRAME
 #         delta_t = time increment
 # OUTPUTS: b_body = [m_x, m_y, m_z] magnetic field in body frame
 def mag_processing(m_x, m_y, m_z, m_x0, m_y0, m_z0, delta_t):
@@ -21,7 +21,9 @@ def mag_processing(m_x, m_y, m_z, m_x0, m_y0, m_z0, delta_t):
         m_z0 = float(m_z0)
     except:
         return([np.inf, np.inf, np.inf])
-    m_current = np.array((m_x, m_y, m_z))
+    
+    m_sens = np.array((m_x, m_y, m_z))                          # vector in sensor frame
+    m_current = np.dot(R_Sensor_to_Body(THETA_IMU), m_sens)     # convert to body frame
     m_prev = np.array((m_x0, m_y0, m_z0))
     alpha = np.exp(-1*MAG_FILTER/delta_t) # value tbd
     m_calib = np.multiply(np.subtract(m_current, MAG_OFFSET), MAG_GAIN) # apply offsets and gains
