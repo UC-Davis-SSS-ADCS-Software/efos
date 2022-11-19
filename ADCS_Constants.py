@@ -16,6 +16,7 @@ GYRO_FILTER = 0.40 # gyro filter time constant
 
 # REFERENCE ANGLES
 THETA_IMU = 90  # degrees; angle from IMU to body frame, measured CCW
+R = np.array(((np.cos(THETA_IMU), -np.sin(THETA_IMU), 0), (np.sin(THETA_IMU), np.cos(THETA_IMU), 0), (0, 0, 1))) # Rotation matrix to aign IMU and Satellite Axes
 
 # CONTROLLER CONSTANTS (PID needs hardware testing)
 BDOT_GAIN = 67200 # bdot gain constant when bdot is on
