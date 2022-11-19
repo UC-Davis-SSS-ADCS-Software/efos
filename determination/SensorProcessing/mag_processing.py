@@ -5,7 +5,7 @@
 # * currently sampling rate is 200ms, will check with cs how often we will sample data from magnetometer
 # * still need rotation matrix depending on imu location in cubesat
 import numpy as np
-from ADCS_Constants import MAG_GAIN, MAG_OFFSET, MAG_FILTER, MAG_ROTATION
+from ADCS_Constants import MAG_GAIN, MAG_OFFSET, MAG_FILTER, R_SENSOR_TO_BODY
 
 # INPUTS: m_x, m_y, m_z: raw magnetomer t = t IN SENSOR FRAME
 #         m_x0, m_y0, m_z0: filtered magnetometer data at t = t-1 IN BODY FRAME
@@ -23,10 +23,9 @@ def mag_processing(m_x, m_y, m_z, m_x0, m_y0, m_z0, delta_t):
         return([np.inf, np.inf, np.inf])
     
     m_sens = np.array((m_x, m_y, m_z))                          # vector in sensor frame
-    m_current = np.dot(R_Sensor_to_Body(THETA_IMU), m_sens)     # convert to body frame
+    m_current = np.dot(R_SENSOR_TO_BODY, m_sens)     # convert to body frame
     m_prev = np.array((m_x0, m_y0, m_z0))
     alpha = np.exp(-1*MAG_FILTER/delta_t) # value tbd
     m_calib = np.multiply(np.subtract(m_current, MAG_OFFSET), MAG_GAIN) # apply offsets and gains
     m_filtered = np.add(np.multiply(m_calib, alpha), np.multiply(m_prev, 1-alpha)) # apply low-pass filter
-    b_body = np.dot(MAG_ROTATION,m_filtered) # apply rotation matrix
-    return b_body
+    return m_filtered

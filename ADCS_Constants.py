@@ -9,7 +9,8 @@ SUN_FILTER = 0.20 # sun low-pass filter time constant
 # IMU calibration constants
 MAG_OFFSET = [0, 0, 0] # magnetometer calibration offsets
 MAG_GAIN = [1, 1, 1] # magnetometer gain offsets
-MAG_FILTER = 0.15 # magnetometer filter time constant
+# MAG_FILTER = 0.15 # magnetometer filter time constant
+MAG_FILTER = 0.01 # needs to be calibrated
 GYRO_OFFSET = [0, 0, 0] # gyroscope calibration offsets
 GYRO_GAIN = [1, 1, 1] # gyroscope gain offsets
 GYRO_FILTER = 0.40 # gyro filter time constant
