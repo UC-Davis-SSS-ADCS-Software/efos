@@ -1,7 +1,7 @@
 # imu processing
 # imports
 import numpy as np
-from ADCS_Constants import GYRO_GAIN, GYRO_FILTER, GYRO_OFFSET, GYRO_ROTATION, THETA_IMU
+from ADCS_Constants import GYRO_GAIN, GYRO_FILTER, GYRO_OFFSET, R_SENSOR_TO_BODY
 from R_Sensor_to_Body import R_Sensor_to_Body
 
 # INPUTS: w_x, w_y, w_z at t = t in sensor frame
@@ -18,11 +18,11 @@ def imu_processing(w_x, w_y, w_z, w_x0, w_y0, w_z0, delta_t):
         w_z0 = float(w_z0)
     except:
         return([np.inf, np.inf, np.inf])
-    w_sens = np.array((w_x, w_y, w_z))                          # vector in sensor frame
-    w_current = np.dot(R_Sensor_to_Body(THETA_IMU), w_sens)     # convert to body frame
+    
+    w_sens = np.array((w_x, w_y, w_z))               # vector in sensor frame
+    w_current = np.dot(R_SENSOR_TO_BODY, w_sens)     # convert to body frame
     w_prev = np.array((w_x0, w_y0, w_z0))
-    alpha = np.exp(-1*GYRO_FILTER/delta_t) # value tbd
+    alpha = np.exp(-1*GYRO_FILTER/delta_t)           # value tbd
     w_calib = np.multiply(np.subtract(w_current, GYRO_OFFSET), GYRO_GAIN) # apply offsets and gains
     w_filtered = np.add(np.multiply(w_calib, alpha), np.multiply(w_prev, 1-alpha)) # apply low-pass filter
-    w_measured = np.dot(GYRO_ROTATION,w_filtered) # apply rotation matrix
-    return w_measured
+    return w_filtered
