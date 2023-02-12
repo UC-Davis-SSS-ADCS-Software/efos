@@ -78,7 +78,7 @@ def Main_ADCS(sunsensor_inputs, mag_inputs, angvel_inputs, datetime, mode, TLE1,
             # Calculate attitude using TRIAD
             triad_object = triad_class.TRIAD(sun_pos_body, mag_field_body, sun_pos_eci, mag_field_eci)
             q_measured = triad_object.triad()
-            [q_desired, w_desired] = Target_calculation(mode,pos_eci,vel_eci)
+            [q_desired, w_desired] = Target_calculation(mode,pos_eci,vel_eci) #TODO: fix target calculation
             w_measured = body_angvel[2] # angular velocity of body about z-axis
             controller_object = Attitude_Controller.Attitude_Control(q_desired, q_measured, w_desired, w_measured) # reaction wheel controller
             des_torque = controller_object.attitude_control()
