@@ -5,6 +5,7 @@
 - pyIGRF
 - math
 - sgp4
+- astropy
 
 ## Features
 ### Eclipse Check 
