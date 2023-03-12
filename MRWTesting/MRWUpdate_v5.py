@@ -30,9 +30,13 @@ numTachometerTrips = 0   # number of tachometer trips while motor is running
 MRW_ON = False           # if motor has been started
 manager = Manager()      # manage multiprocessing
 DutyCycle = manager.Value('d', 0.0)                                             # duty cycle (default 0)
-header = ['Duty Cycle', 'wx', 'wy' 'wz', 'Speed', 'Start Time', 'End Time']     # output file header
-outfile = '/home/pi/MRW_Codes/Data/speedDataDefault.csv'                        # output file name - will be defined at motor start
-
+header = ['Duty Cycle', 'wx', 'wy' 'wz', 'Speed', 'Start Time', 'End Time']     # output file header                      # output file name - will be defined at motor start
+now = datetime.now()
+today = 'WQ' + str(now.month).zfill(2) + str(now.day).zfill(2) + str(now.year)[-2:] + str(now.hour).zfill(2) + str(now.minute).zfill(2)
+outputDir= '/home/pi/ADCS_Software/efos/MRWTesting/OutputData'
+if os.path.isdir(outputDir) == False:
+    os.mkdir(outputDir)
+outfile = outputDir + '/speedData' + today + '.csv'
 
 ### GPIO PINS ###
 GPIO.setup(PWMPin, GPIO.OUT)
@@ -119,10 +123,6 @@ def MRWStart():
 # Set up output file
 def CreateOutputFile():
     global outfile
-    
-    now = datetime.now()
-    today = 'WQ' + str(now.month).zfill(2) + str(now.day).zfill(2) + str(now.year)[-2:] + str(now.hour).zfill(2) + str(now.minute).zfill(2)
-    outfile = '/home/pi/MRW_Codes/Data/speedData' + today + '.csv'
     with open(outfile, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(header)
