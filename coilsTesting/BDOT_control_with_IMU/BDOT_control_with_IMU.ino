@@ -4,9 +4,9 @@
  *  Involves getting IMU data, running BDOT, and outputting the correct current from
  *  the coils test board.
  */
-#include "bdot_control.h"
-#include "ICM20948.h"
-#include "AD520X.h"
+#include "src/bdot/bdot_control.h"
+#include "src/imu/ICM20948.h"
+#include "src/digital_potentiometer/AD520X.h"
 
 #define XCOILOUTPUT 0
 #define YCOILOUTPUT 1
@@ -121,8 +121,8 @@ void loop() {
     digitalWrite(YCOILSIGNPIN, y_coil_voltage > 0);
     digitalWrite(ZCOILSIGNPIN, z_coil_voltage > 0);
 
-    POT.setPercentage(XCOILOUTPUT, abs(x_coil_voltage)/5.0);
-    POT.setPercentage(YCOILOUTPUT, abs(y_coil_voltage)/5.0);
-    POT.setPercentage(ZCOILOUTPUT, abs(z_coil_voltage)/5.0);
+    POT.setPercentage(XCOILOUTPUT, fabs(x_coil_voltage)/5.0);
+    POT.setPercentage(YCOILOUTPUT, fabs(y_coil_voltage)/5.0);
+    POT.setPercentage(ZCOILOUTPUT, fabs(z_coil_voltage)/5.0);
   }
 }
