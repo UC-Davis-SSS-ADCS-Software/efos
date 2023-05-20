@@ -49,7 +49,7 @@ def HDD_ccw_drive(sleep_time, delta):
     HDD_current_f = Power_Sensor.current/1000
     time.sleep(sleep_time)
     pi.set_servo_pulsewidth(ESC,neutral_ESC_inp)
-    
+
     return [w_x0, w_y0, w_z0, w_x1, w_y1, w_z1, w_xf, w_yf, w_zf, HDD_current_f]
 
 # CW drive function
@@ -70,7 +70,7 @@ def HDD_cw_drive(sleep_time, delta):
     time.sleep(sleep_time)
     pi.set_servo_pulsewidth(ESC,neutral_ESC_inp)
     return [w_x0, w_y0, w_z0, w_x1, w_y1, w_z1, w_xf, w_yf, w_zf, HDD_current_f]
-    
+
 # HDD Stop Function
 def HDD_stop():
     pi.set_servo_pulsewidth(ESC,neutral_ESC_inp)
