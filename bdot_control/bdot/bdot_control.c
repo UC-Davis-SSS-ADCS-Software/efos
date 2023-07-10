@@ -1,40 +1,37 @@
-/**@file bdot_control.ino
+/**@file bdot_control.c
  * 
  * @brief Implementation of the BDOT algorithm.
  * 
  * This file was transcribed from the python version on github.
  * The original code is left in a comment at the end of this file.
+ *
+ * @author Jacob Tkeio (jacobtkeio@gmail.com) 6/11/2023
  */
-#include <math.h>
+
 #include "bdot_control.h"
+#include "adcs_math/vector.h"
 
-//the constant that converts the cross product to amps
-const long int current_constant = 67200;
+//the constant that converts the cross product to amps.
+const float current_constant = 67200.0f;
 
 
-void bdot_control(double coils_current[], double mf[], double av[]) {
-  //coils_current is the cross product of the magnetic_field array and
-  //the angular velocity array multiplied by the current constant
-  coils_current[0] = current_constant * (mf[1]*av[2] - mf[2]*av[1]);
-  coils_current[1] = current_constant * (mf[2]*av[0] - mf[0]*av[2]);
-  coils_current[2] = current_constant * (mf[0]*av[1] - mf[1]*av[0]);
+void bdot_control(vec3 mf, vec3 av, vec3 *coils_current) {
+	vec3 temp;
 
-  //if the output command has more current than we can produce, scale it to the max (0.158)
-  if (fabs(coils_current[0]) + fabs(coils_current[1]) + fabs(coils_current[1]) > 0.158) {
-    double coils_current_norm = 
-      sqrt(
-        pow(coils_current[0], 2) + 
-        pow(coils_current[1], 2) + 
-        pow(coils_current[2], 2)
-      );
-    
-    coils_current[0] = 0.158 * coils_current[0] / coils_current_norm;
-    coils_current[1] = 0.158 * coils_current[1] / coils_current_norm;
-    coils_current[2] = 0.158 * coils_current[2] / coils_current_norm;
-  }
+	vec_cross(mf, av, &temp);
+	vec_scalar(current_constant, temp, &temp);
 
-  return;
+	//cap output at maximum 0.158 Amps across all coils. 
+	float temp_mag = vec_mag(temp);
+	if (temp_mag > 0.158f) {
+		//this step is equivalent to 0.158f * normalized temp.
+		vec_scalar(0.158f / temp_mag, temp, &temp);
+	}
+
+	(*coils_current) = temp;
 }
+
+
 
 /*
 import numpy as np

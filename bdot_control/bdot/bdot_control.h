@@ -2,25 +2,28 @@
  * 
  * @brief The interface to the BDOT algorithm.
  * 
- * This function will break inexplicably if passed
- *  any arrays less than length 3.
+ * @author Jacob Tkeio (jacobtkeio@gmail.com) 6/11/2023
  */
+
 #ifndef BDOT_CONTROL
 #define BDOT_CONTROL
+
+#include "adcs_math/vector.h"
+
 
 /**@brief Calculate a dipole command for all three coils given our
  *  magnetic field and angular velocity data.
  * 
- * @param coils_current An array to be pre-allocated that will contain
- *      the output after bdot_control runs.
- *    Format: [X, Y, Z] Amperes
  * @param mf The magnetic field vector.
- *    Format: [X, Y, Z] Micro Teslas
+ * 		Format: [X, Y, Z] Micro Teslas
  * @param av The angular velocity vector.
- *    Format: [X, Y, Z] Radians per Second
- * 
+ *		Format: [X, Y, Z] Radians per Second
+ * @param coils_current The vec3* that will hold the coil outputs.
+ * 		Format: [X, Y, Z] Amperes
+ *
  * @return Void.
  */
-void bdot_control(double coils_current[], double mf[], double av[]);
+void bdot_control(vec3 mf, vec3 av, vec3 *coils_current);
+
 
 #endif//BDOT_CONTROL

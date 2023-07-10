@@ -4,9 +4,12 @@
  *  Involves getting IMU data, running BDOT, and outputting the correct current from
  *  the coils test board.
  */
+
+#include "src/adcs_math/vector.h"
 #include "src/bdot/bdot_control.h"
 #include "src/imu/ICM20948.h"
 #include "src/digital_potentiometer/AD520X.h"
+
 
 #define XCOILOUTPUT 0
 #define YCOILOUTPUT 1
@@ -24,11 +27,11 @@ bool dataAvailable = false;
 int dataTime = 0;
 int lastDataTime = 0;
 
-double coils_current[3];
-double magnetic_field[3];
-double angular_velocity[3];
+vec3 coils_current;
+vec3 magnetic_field;
+vec3 angular_velocity;
 
-const double coils_resistance = 31.6455696; //5V max / 0.158A max = R? TODO change
+const float coils_resistance = 31.6455696f; //5V max / 0.158A max = R? TODO change
 
 
 void setup() {
@@ -96,26 +99,33 @@ void loop() {
     Serial.print("\t");
     Serial.println(IMU.getTemperature_C(),6);
 
-    magnetic_field[0] = IMU.getMagX_uT();
-    magnetic_field[1] = IMU.getMagY_uT();
-    magnetic_field[2] = IMU.getMagZ_uT();
+	vec_set(
+		IMU.getMagX_uT(),
+		IMU.getMagY_uT(),
+		IMU.getMagZ_uT(),
+		&magnetic_field
+	);
 
-    angular_velocity[0] = IMU.getGyroX_rads();
-    angular_velocity[1] = IMU.getGyroY_rads();
-    angular_velocity[2] = IMU.getGyroZ_rads();
+	vec_set(
+		IMU.getGyroX_rads(),
+		IMU.getGyroY_rads(),
+		IMU.getGyroZ_rads(),
+		&angular_velocity
+	);
 
-    bdot_control(coils_current, magnetic_field, angular_velocity);
+
+    bdot_control(magnetic_field, angular_velocity, &coils_current);
 
     Serial.print("X Coil Current: ");
-    Serial.println(coils_current[0]);
+    Serial.println(coils_current.x);
     Serial.print("Y Coil Current: ");
-    Serial.println(coils_current[1]);
+    Serial.println(coils_current.y);
     Serial.print("Z Coil Current: ");
-    Serial.println(coils_current[2]);
+    Serial.println(coils_current.z);
 
-    double x_coil_voltage = coils_resistance * coils_current[0];
-    double y_coil_voltage = coils_resistance * coils_current[1];
-    double z_coil_voltage = coils_resistance * coils_current[2];
+    double x_coil_voltage = coils_resistance * coils_current.x;
+    double y_coil_voltage = coils_resistance * coils_current.y;
+    double z_coil_voltage = coils_resistance * coils_current.z;
 
     digitalWrite(XCOILSIGNPIN, x_coil_voltage > 0);
     digitalWrite(YCOILSIGNPIN, y_coil_voltage > 0);
