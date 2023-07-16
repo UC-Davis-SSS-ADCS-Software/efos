@@ -81,3 +81,7 @@ float vec_mag(vec3 vector) {
 	return sqrtf(vec_dot(vector, vector));
 }
 
+
+
+
+

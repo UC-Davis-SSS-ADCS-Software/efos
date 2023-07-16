@@ -12,8 +12,8 @@
 
 
 typedef struct Quaternion {
-		float scalar;
-		vec3  vector;
+	float scalar;
+	vec3  vector;
 } quat; //Use "quat" as the type.
 
 
