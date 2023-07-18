@@ -3,9 +3,11 @@
  * @brief Implementation of the BDOT algorithm.
  * 
  * This file was transcribed from the python version on github.
- * The original code is left in a comment at the end of this file.
+ *  The original code is left in a comment at the end of this file.
  *
- * @author Jacob Tkeio (jacobtkeio@gmail.com) 6/11/2023
+ * @author Jacob Tkeio (jacobtkeio@gmail.com)
+ *
+ * @date 6/11/2023
  */
 
 #include "bdot_control.h"
@@ -29,7 +31,7 @@ void bdot_control(vec3 mf, vec3 av, vec3 *coils_current) {
 	}
 
 	(*coils_current) = temp;
-}
+} //TODO verify! totally unclear if this is correct!
 
 
 
@@ -44,3 +46,8 @@ def bdot_control(BB, pqr):
         current = current/np.linalg.norm(current)*0.158
     return current
 */
+
+
+
+
+

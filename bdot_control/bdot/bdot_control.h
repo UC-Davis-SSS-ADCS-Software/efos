@@ -1,8 +1,16 @@
 /**@file bdot_control.h
  * 
- * @brief The interface to the BDOT algorithm.
+ * @brief Interface to the BDOT algorithm.
+ *
+ * BDOT calculates the optimal direction in which to create a
+ *  magnetic dipole in order to slow REALOP the fastest during
+ *  detumbling.
+ * The result should have REALOP aligned north-south longways,
+ *  spinning on only the longways axis.
  * 
- * @author Jacob Tkeio (jacobtkeio@gmail.com) 6/11/2023
+ * @author Jacob Tkeio (jacobtkeio@gmail.com)
+ *
+ * @date 6/11/2023
  */
 
 #ifndef BDOT_CONTROL
@@ -27,3 +35,8 @@ void bdot_control(vec3 mf, vec3 av, vec3 *coils_current);
 
 
 #endif//BDOT_CONTROL
+
+
+
+
+
