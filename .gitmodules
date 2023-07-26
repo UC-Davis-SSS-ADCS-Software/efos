@@ -4,6 +4,3 @@
 [submodule "coilsTesting/BDOT_control_with_IMU/src/digital_potentiometer"]
 	path = coilsTesting/BDOT_control_with_IMU/src/digital_potentiometer
 	url = https://github.com/RobTillaart/AD520X.git
-[submodule "sgp4"]
-	path = sgp4
-	url = https://github.com/aholinch/sgp4.git
