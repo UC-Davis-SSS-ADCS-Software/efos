@@ -25,7 +25,7 @@ while i!=500:
     chan2 = 0#round(AnalogIn(ads, ADS.P2).voltage,p)
     chan3 = 0#round(AnalogIn(ads, ADS.P3).voltage,p)
     
-    mapped=map(chan0,0.2155065767,0.4242629475,0,1)
+    mapped=map(chan0,2.4800756859,3.080093997,0,1)
     
     volt_list.append(chan0)
     
@@ -43,11 +43,10 @@ while i!=500:
     i+=1
         
 
-with open("data4_raw3.txt","w") as external_file:
+with open("data6_raw_attempt2.txt","w") as external_file:
     print(volt_list,file=external_file)
     external_file.close()
     
-#with open("data2_mapped.txt","w") as external_file:
+#with open("data6_mapped.txt","w") as external_file:
 #    print(deg_list,file=external_file)
-#    external_file.close()
-
+ #   external_file.close()
