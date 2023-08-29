@@ -20,7 +20,8 @@
 
 //State variables
 mat3 realop_attitude;
-double julian_date;
+double UTC1;
+double UTC2;
 
 
 typedef enum {
@@ -30,17 +31,15 @@ typedef enum {
 } adcs_mode;
 
 
-void ADCS_MAIN(adcs_mode, double julian_date);
-
-double calculate_julian_date(
+void ADCS_MAIN(
+	adcs_mode mode,
 	int year,
 	int month,
 	int day,
 	int hour,
 	int min,
-	int sec
+	double sec
 );
-
 
 
 #endif//ADCS_H
