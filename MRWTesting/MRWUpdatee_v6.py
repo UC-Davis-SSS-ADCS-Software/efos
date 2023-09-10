@@ -35,7 +35,13 @@ LastDutyCycle = manager.Value('d', 0.0)
 currentSpeed = manager.Value('d', 0.0)                         # current speed (default 0)
 lastSpeed = manager.Value('d', 0.0)                            # last speed (default 0)
 header = ['Duty Cycle', 'Speed', 'Start Time', 'End Time']     # output file header
-outfile = '/home/pi/MRW_Codes/Data/speedDataDefault.csv'       # output file name - will be defined at motor start
+
+now = datetime.now()
+today = 'WQ' + str(now.month).zfill(2) + str(now.day).zfill(2) + str(now.year)[-2:] + str(now.hour).zfill(2) + str(now.minute).zfill(2)
+outputDir= '/home/pi/ADCS_Software/efos/MRWTesting/OutputData'
+if os.path.isdir(outputDir) == False:
+    os.mkdir(outputDir)
+outfile = outputDir + '/speedData' + today + '.csv'
 
 
 ### GPIO PINS ###
@@ -63,7 +69,13 @@ def DataRead(start_time,end_time):
     try:
         ax,ay,az,wx,wy,wz = mpu6050_conv()
     except:
-        pass
+        ax = 0
+        ay = 0
+        az = 0
+        wx = 0
+        wy = 0
+        wz = 0
+
 
     #Calculate MRW speed (absolute value)
     currentSpeed.value = (numTachometerTrips/delT)*30
@@ -139,7 +151,8 @@ def MRWRun(currentDutyCycle):
 
     # Run motor
     startTime = time.time()
-    motor.changeDutyCycle(abs(DutyCycle.value))
+    motor.ChangeDutyCycle(abs(DutyCycle.value))
+
     time.sleep(0.5)     # give motor time to spin up
     endTime = time.time()
 
@@ -162,7 +175,8 @@ def MRWRun(currentDutyCycle):
         elif DutyCycle.value > 0:
             direct = 1
             GPIO.output(DIRpin, GPIO.LOW)
-        motor.changeDutyCycle(abs(DutyCycle.value))
+            
+        motor.ChangeDutyCycle(abs(DutyCycle.value))
 
         # Now we give it a moment to spin up
         # Then try to run at our desired duty cycle again, until we are no longer exceeding max torque
@@ -172,9 +186,7 @@ def MRWRun(currentDutyCycle):
 def CreateOutputFile():
     global outfile
 
-    now = datetime.now()
-    today = 'WQ' + str(now.month).zfill(2) + str(now.day).zfill(2) + str(now.year)[-2:] + str(now.hour).zfill(2) + str(now.minute).zfill(2)
-    outfile = '/home/pi/MRW_Codes/Data/speedData' + today + '.csv'
+
     with open(outfile, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(header)
@@ -198,7 +210,8 @@ def main():
 
     # Set up ramp parameters
     allDutyCycles = np.linspace(0, 100, 11)     # absolute value of duty cycles (0-100)
-    timePerDutyCycle = 30                       # time to run each duty cycle (seconds)
+    timePerDutyCycle = 10                       # time to run each duty cycle (seconds)
+
 
     # Run ramp
     for currentDutyCycle in allDutyCycles:
@@ -216,7 +229,8 @@ def main():
     print('done')
 
     # Plot result
-    rpm, secondsElapsed = np.loadtxt(outfile, unpack=True, skiprows=1, delimiter=',', usecols=(4,5))
+    rpm, secondsElapsed = np.loadtxt(outfile, unpack=True, skiprows=1, delimiter=',', usecols=(1,2))
+
     plt.plot(secondsElapsed, rpm)
     plt.title('Time vs RPM')
     plt.xlabel('Time (s)')
