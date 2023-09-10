@@ -35,12 +35,14 @@ LastDutyCycle = manager.Value('d', 0.0)
 currentSpeed = manager.Value('d', 0.0)                         # current speed (default 0)
 lastSpeed = manager.Value('d', 0.0)                            # last speed (default 0)
 header = ['Duty Cycle', 'Speed', 'Start Time', 'End Time']     # output file header
+
 now = datetime.now()
 today = 'WQ' + str(now.month).zfill(2) + str(now.day).zfill(2) + str(now.year)[-2:] + str(now.hour).zfill(2) + str(now.minute).zfill(2)
 outputDir= '/home/pi/ADCS_Software/efos/MRWTesting/OutputData'
 if os.path.isdir(outputDir) == False:
     os.mkdir(outputDir)
 outfile = outputDir + '/speedData' + today + '.csv'
+
 
 ### GPIO PINS ###
 GPIO.setup(PWMPin, GPIO.OUT)
@@ -73,6 +75,7 @@ def DataRead(start_time,end_time):
         wx = 0
         wy = 0
         wz = 0
+
 
     #Calculate MRW speed (absolute value)
     currentSpeed.value = (numTachometerTrips/delT)*30
@@ -149,6 +152,7 @@ def MRWRun(currentDutyCycle):
     # Run motor
     startTime = time.time()
     motor.ChangeDutyCycle(abs(DutyCycle.value))
+
     time.sleep(0.5)     # give motor time to spin up
     endTime = time.time()
 
@@ -171,6 +175,7 @@ def MRWRun(currentDutyCycle):
         elif DutyCycle.value > 0:
             direct = 1
             GPIO.output(DIRpin, GPIO.LOW)
+            
         motor.ChangeDutyCycle(abs(DutyCycle.value))
 
         # Now we give it a moment to spin up
@@ -180,6 +185,7 @@ def MRWRun(currentDutyCycle):
 # Set up output file
 def CreateOutputFile():
     global outfile
+
 
     with open(outfile, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -206,6 +212,7 @@ def main():
     allDutyCycles = np.linspace(0, 100, 11)     # absolute value of duty cycles (0-100)
     timePerDutyCycle = 10                       # time to run each duty cycle (seconds)
 
+
     # Run ramp
     for currentDutyCycle in allDutyCycles:
         MRWRun(currentDutyCycle)
@@ -223,6 +230,7 @@ def main():
 
     # Plot result
     rpm, secondsElapsed = np.loadtxt(outfile, unpack=True, skiprows=1, delimiter=',', usecols=(1,2))
+
     plt.plot(secondsElapsed, rpm)
     plt.title('Time vs RPM')
     plt.xlabel('Time (s)')
