@@ -14,8 +14,10 @@
 
 
 //Intellisat functions required in ADCS_MAIN
-//...
-
+//e.g. getting raw sun sensor data,
+//     getting IMU data,
+//     sending a command to the MRW/HDD,
+//     sending a coils command, etc.
 
 
 //State variables
@@ -25,9 +27,9 @@ double UTC2;
 
 
 typedef enum {
-	DETUMBLE,
-	HDD,
-	MRW
+	ADCS_DETUMBLE,
+	ADCS_HDD,
+	ADCS_MRW
 } adcs_mode;
 
 
