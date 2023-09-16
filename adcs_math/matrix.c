@@ -2,8 +2,6 @@
  *
  * @brief Implementation of 3x3 matrix utility functions.
  *
- * Note that REALOP-1's MCU works best with floats, not doubles.
- *
  * These functions were designed with the idea in mind that
  * 	a matrix could be passed as both an input and the output
  * 	without issue, even if some pass-by-value arguments are later
@@ -16,9 +14,9 @@
 
 
 void mat_set(
-	float x1, float x2, float x3,
-	float y1, float y2, float y3,
-	float z1, float z2, float z3,
+	double x1, double x2, double x3,
+	double y1, double y2, double y3,
+	double z1, double z2, double z3,
 	mat3 *output
 ) {
 	(*output).x1 = x1;
@@ -58,7 +56,7 @@ void mat_transpose(mat3 mat, mat3 *output) {
 	);
 }
 
-void mat_scalar(float scalar, mat3 mat, mat3 *output) {
+void mat_scalar(double scalar, mat3 mat, mat3 *output) {
 	mat_set(
 		scalar * mat.x1,
 		scalar * mat.x2,
@@ -88,7 +86,7 @@ void mat_mult(mat3 left, mat3 right, mat3 *output) {
 	);
 }
 
-float mat_det(mat3 mat) {
+double mat_det(mat3 mat) {
 	return 
 		mat.x1 * (mat.y2*mat.z3 - mat.z2*mat.y3) -
 		mat.x2 * (mat.y1*mat.z3 - mat.z1*mat.y3) +

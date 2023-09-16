@@ -10,9 +10,9 @@
 
 
 typedef struct Vector3 {
-		float x;
-		float y;
-		float z;
+		double x;
+		double y;
+		double z;
 } vec3; //Use "vec3" as the type.
 
 
@@ -23,7 +23,7 @@ typedef struct Vector3 {
  *
  * @return Void.
  */
-void vec_set(float x, float y, float z, vec3 *output);
+void vec_set(double x, double y, double z, vec3 *output);
 
 
 /**@brief Multiply a vector by a scalar value.
@@ -36,7 +36,7 @@ void vec_set(float x, float y, float z, vec3 *output);
  *
  * @return Void.
  */
-void vec_scalar(float scalar, vec3 vector, vec3 *output);
+void vec_scalar(double scalar, vec3 vector, vec3 *output);
 
 
 /**@brief Perform a cross product on two vectors.
@@ -96,7 +96,7 @@ void vec_norm(vec3 vector, vec3 *output);
  *
  * @return The result of the dot product.
  */
-float vec_dot(vec3 first, vec3 second);
+double vec_dot(vec3 first, vec3 second);
 
 
 /**@brief Calculate the magnitude (length) of a vector.
@@ -107,7 +107,7 @@ float vec_dot(vec3 first, vec3 second);
  *
  * @return The magnitude of the vector.
  */
-float vec_mag(vec3 vector);
+double vec_mag(vec3 vector);
 
 
 #endif//VECTOR_H

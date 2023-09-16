@@ -12,22 +12,22 @@
 
 
 typedef struct Matrix3x3 {
-	float x1;
-	float x2;
-	float x3;
-	float y1;
-	float y2;
-	float y3;
-	float z1;
-	float z2;
-	float z3;
+	double x1;
+	double x2;
+	double x3;
+	double y1;
+	double y2;
+	double y3;
+	double z1;
+	double z2;
+	double z3;
 } mat3; //Use "mat3" as the type.
 
 
 const mat3 Identity = {
-	1.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 0.0f, 1.0f
+	1.0, 0.0, 0.0,
+	0.0, 1.0, 0.0,
+	0.0, 0.0, 1.0
 };
 
 
@@ -39,9 +39,9 @@ const mat3 Identity = {
  * @return Void.
  */
 void mat_set(
-	float x1, float x2, float x3,
-	float y1, float y2, float y3,
-	float z1, float z2, float z3,
+	double x1, double x2, double x3,
+	double y1, double y2, double y3,
+	double z1, double z2, double z3,
 	mat3 *output
 );
 
@@ -81,7 +81,7 @@ void mat_transpose(mat3 matrix, mat3 *output);
  *
  * @return Void.
  */
-void mat_scalar(float scalar, mat3 matrix, mat3 *output);
+void mat_scalar(double scalar, mat3 matrix, mat3 *output);
 
 
 /**@brief Multiply two matrices.
@@ -103,7 +103,12 @@ void mat_mult(mat3 left, mat3 right, mat3 *output);
  *
  * @return The determinant of the matrix.
  */
-float mat_det(mat3 matrix);
+double mat_det(mat3 matrix);
 
 
 #endif//MATRIX_H
+
+
+
+
+

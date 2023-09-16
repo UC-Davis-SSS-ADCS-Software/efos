@@ -3,8 +3,7 @@
  * @brief Interface to the BDOT algorithm.
  *
  * BDOT calculates the optimal direction in which to create a
- *  magnetic dipole in order to slow REALOP the fastest during
- *  detumbling.
+ *  magnetic dipole in order to slow REALOP during detumbling.
  * The result should have REALOP aligned north-south longways,
  *  spinning on only the longways axis.
  * 
