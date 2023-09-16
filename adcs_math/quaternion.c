@@ -2,10 +2,6 @@
  *
  * @brief Implementation of quaternion utility functions.
  *
- * Note that REALOP-1's MCU works best with floats, not doubles.
- * 	Especially note that all <math.h> functions have
- * 	a float-specific version you must use!
- *
  * These functions were designed with the idea in mind that
  * 	a quaternion could be passed as both an input and the output
  * 	without issue, even if some pass-by-value arguments are later
@@ -22,13 +18,13 @@
 #include "vector.h"
 
 
-void quat_set(float scalar, vec3 vector, quat *output) {
+void quat_set(double scalar, vec3 vector, quat *output) {
 	(*output).scalar = scalar;
 	(*output).vector = vector;
 }
 
 
-void quat_scalar(float scalar, quat quaternion, quat *output) {
+void quat_scalar(double scalar, quat quaternion, quat *output) {
 	vec_scalar(scalar, quaternion.vector, &(quaternion.vector));
 
 	quat_set(
@@ -41,7 +37,7 @@ void quat_scalar(float scalar, quat quaternion, quat *output) {
 
 void quat_mult(quat left, quat right, quat *output) {
 	vec3 new_vector;
-	float new_scalar =
+	double new_scalar =
 		left.scalar * right.scalar -
 		vec_dot(left.vector, right.vector);
 
@@ -74,7 +70,7 @@ void quat_norm(quat quaternion, quat *output) {
 
 
 void quat_conj(quat quaternion, quat *output) {
-	vec_scalar(-1.0f, quaternion.vector, &(quaternion.vector));
+	vec_scalar(-1.0, quaternion.vector, &(quaternion.vector));
 	quat_set(
 		quaternion.scalar,
 		quaternion.vector,
@@ -89,16 +85,16 @@ void quat_inverse(quat quaternion, quat *output) {
 }
 
 
-void quat_from(float angle, vec3 vector, quat *output) {
+void quat_from(double angle, vec3 vector, quat *output) {
 	vec_norm(vector, &vector);
 	vec_scalar(
-		sinf(angle * 0.5f),
+		sin(angle / 2),
 		vector,
 		&vector
 	);
 
 	quat_set(
-		cosf(angle * 0.5f),
+		cos(angle / 2),
 		vector,
 		output
 	); 
@@ -116,8 +112,8 @@ void quat_rotate_vec(vec3 vector, quat quaternion, vec3 *output) {
 }
 
 
-float quat_mag(quat quaternion) {
-	return sqrtf(
+double quat_mag(quat quaternion) {
+	return sqrt(
 		quaternion.scalar * quaternion.scalar +
 		vec_dot(quaternion.vector, quaternion.vector)
 	);

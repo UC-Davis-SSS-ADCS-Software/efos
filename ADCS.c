@@ -7,7 +7,6 @@
  */
 
 #include "ADCS.h"
-#include "sofa/20210512/c/src/sofa.h"
 
 
 void ADCS_MAIN(
@@ -19,17 +18,6 @@ void ADCS_MAIN(
 	int min,
 	double sec
 ) {
-	iauDtf2d(
-		"UTC",
-		year,
-		month,
-		day,
-		hour,
-		min,
-		(double) sec,
-		&UTC1,
-		&UTC2
-	);
 
 }
 

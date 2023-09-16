@@ -9,7 +9,7 @@
 #include "determination/pos_lookup/pos_lookup.h"
 #include "determination/pos_lookup/sgp4/src/c/TLE.h"
 #include "determination/pos_lookup/ECEF_to_geodetic.h"
-#include "novasc3.1/novas.h"
+#include "determination/novasc3.1/novas.h"
 
 
 int pos_lookup(
