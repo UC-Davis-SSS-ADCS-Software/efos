@@ -15,9 +15,13 @@
  * @param tle_line1,tle_line2 Both lines of the TLE as C strings.
  * @param UTC1,UTC2 The julian date divided however is easiest.
  * @param longitude,latitude,altitude Pointers to geodetic output.
+ * @param geocentric_radius Pointer to geocentric radius output.
+ * @param geocentric_latitude Pointer to geocentric latitude output.
  *
  * Longitude and latitude are in degrees.
  * Altitude is in meters.
+ * Geocentric radius is in kilometers.
+ * Geocentric latitude is in radians.
  *
  * @return Error code: zero means success, anything else failure.
  */
@@ -28,7 +32,9 @@ int pos_lookup (
 	double UTC2,
 	double *longitude,
 	double *latitude,
-	double *altitude
+	double *altitude,
+    double *geocentric_radius,
+    double *geocentric_latitude
 );
 
 
